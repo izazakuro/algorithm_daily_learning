@@ -1,5 +1,6 @@
 package main
 
+// 斐波那契数里变种
 func tribonacci(n int) int {
 	arr := make([]int, 38)
 	arr[0] = 0
