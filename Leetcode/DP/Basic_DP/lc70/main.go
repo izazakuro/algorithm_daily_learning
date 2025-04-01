@@ -1,5 +1,6 @@
 package main
 
+// 爬楼梯
 func climbStairs(n int) int {
 	if n == 1 {
 		return 1

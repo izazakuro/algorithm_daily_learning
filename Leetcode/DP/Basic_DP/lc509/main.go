@@ -1,5 +1,6 @@
 package main
 
+// 斐波那契数列
 func fib(n int) int {
 	arr := make([]int, 31)
 	arr[0] = 0

@@ -1,5 +1,6 @@
 package main
 
+// 爬楼梯最小花费
 func minCostClimbingStairs(cost []int) int {
 	n := len(cost)
 	dp := make([]int, n+1)
