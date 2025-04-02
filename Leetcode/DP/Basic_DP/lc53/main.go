@@ -26,3 +26,6 @@ func max(a, b int) int {
 	}
 	return b
 }
+
+// 1. DP数组含义：下标为i时的最大和
+// 2. 递推：max(前i-1的最大和+nums[i], 重新从num[i]开始计数）
