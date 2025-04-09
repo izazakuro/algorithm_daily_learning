@@ -36,3 +36,7 @@ func max(a, b int) int {
 	}
 	return b
 }
+
+// DP：能否分割为两个子集 = 能否装背包装到sum/2
+// 01背包问题：dp[j] = max(dp[j]不取，dp[j-nums[i]] + value 取）
+// dp数组含义，下标为0~i, 容量为j的背包所能凑的最大值
