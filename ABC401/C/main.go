@@ -1,44 +1,62 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
-const mod = int64(1e9)
-
 func main() {
+	in := bufio.NewScanner(os.Stdin)
+	in.Split(bufio.ScanWords)
+	buf := make([]byte, 0, 1024*1024)
+	in.Buffer(buf, 1024*1024)
 
-	var n, k int
-	fmt.Scan(&n, &k)
-
-	dp := make([]int64, n+1)
-
-	if n < k {
-		fmt.Println(1)
-		return
+	readInt := func() int {
+		in.Scan()
+		n := 0
+		for _, b := range in.Bytes() {
+			n = n*10 + int(b-'0')
+		}
+		return n
 	}
 
-	r, l := 0, 0
+	N := readInt()
+	M := readInt()
 
-	var sum int64
-	sum = 0
-	for r <= n {
-		if r < k {
-			dp[r] = 1
-			sum = (sum + dp[r]) % mod
-			r++
-		} else {
-			for r-l != k {
-				sum = (sum - dp[l] + mod) % mod
-				l++
-			}
-			dp[r] = sum
-			sum = (sum + dp[r]) % mod
-			r++
+	badCount := make([]int, M)
+	foodToDish := make([][]int, N+1)
+
+	for i := 0; i < M; i++ {
+		k := readInt()
+		for j := 0; j < k; j++ {
+			a := readInt()
+			foodToDish[a] = append(foodToDish[a], i)
+			badCount[i]++
 		}
 	}
 
-	fmt.Println(dp[n] % mod)
+	isCleared := make([]bool, M)
 
-	return
+	B := make([]int, N)
+	for i := 0; i < N; i++ {
+		B[i] = readInt()
+	}
+
+	writer := bufio.NewWriter(os.Stdout)
+	defer writer.Flush()
+
+	result := 0
+
+	for i := 0; i < N; i++ {
+		b := B[i]
+		for _, dish := range foodToDish[b] {
+			badCount[dish]--
+			if !isCleared[dish] && badCount[dish] == 0 {
+				result++
+				isCleared[dish] = true
+			}
+		}
+		fmt.Fprintln(writer, result)
+	}
 }
